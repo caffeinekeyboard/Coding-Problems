@@ -34,3 +34,4 @@ int main()
         cout<<"\n";
     }
 }
+//SIGSEGV generally happens for out of bound traversals.
