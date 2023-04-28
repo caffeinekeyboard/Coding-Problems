@@ -2,12 +2,12 @@
 using namespace std;
 int nearestSquareBelow(unsigned long long x)
 {
-    for(int i=x ; i>0 ; i--)
+    for(int i=x-1 ; i>0 ; i--)
     {
         unsigned long long ans = sqrt(i);
         if((ans*ans) == i)
         {
-            return i;
+            return ans;
         }
         else
             continue;
@@ -16,8 +16,23 @@ int nearestSquareBelow(unsigned long long x)
 }
 int main()
 {
-    unsigned long long x;
-    cin>>x;
-    cout<<nearestSquareBelow(x);
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        unsigned long long x;
+        cin>>x;
+        if(x==1)
+        {
+            cout<<-1;
+        }
+        else
+        {
+            unsigned long long i = nearestSquareBelow(x);
+            cout<<i<<" "<<i<<" "<<(x-(i*i));
+        }
+        cout<<"\n";
+    }
     return 0;
 }
+//REMAINS
