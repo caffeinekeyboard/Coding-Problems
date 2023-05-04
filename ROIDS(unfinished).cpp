@@ -1,13 +1,20 @@
 #include<bits/stdc++.h>
 using namespace std;
-double processor(int l , int n)
+int modInverse(int A, int M)
 {
-    double ans = 1;
+    for (int X = 1; X < M; X++)
+        if (((A % M) * (X % M)) % M == 1)
+            return X;
+}
+int processor(int l , int n)
+{
+    long ans = 1;
     while(l>0)
     {
-        ans = ans*float(l)/float(n);
+        
         l--;
         n--;
+        
     }
     return ans;
 }
@@ -20,7 +27,7 @@ int main()
     {
         cin>>map[i][0]>>map[i][1];
     }
-    int arr[N];
+    int arr[N+1];
     for(int i=0 ; i<N ; i++)
     {
         arr[i] = map[i][0];
@@ -29,18 +36,17 @@ int main()
     int leastcount = 1;
     int i=0;
     int n=N;
-    int prob = 1;
+    double prob = 1.0;
     while(i != N)
     {
         if(i==N-1)
             break;
-        while(arr[i] = arr[i+1])//SIGSEGV imminent
+        while(arr[i] == arr[i+1])//SIGSEGV imminent
         {
             leastcount++;
             i++;
         }
         prob = prob*processor(leastcount , n);
-        prob = prob%1000000007;
         i++;
         n = n-leastcount;
     }
