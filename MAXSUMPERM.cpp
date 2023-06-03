@@ -24,45 +24,48 @@ int main()
             matrix[i][0] = beginindex-1;
             matrix[i][1] = endindex;
         }
-        int greatdiff = 0;
-        int greatdiffbegin = 0;
-        int greatdiffend = 0;
-        for(int i=0 ; i<Q ; i++)
+        int visitedarray[N] = {};
+        for(int i=0 ; i<N ; i++)
         {
-            int diff = matrix[i][1] - matrix[i][0];
-            if(diff>greatdiff)
+            for(int j=0 ; j<Q ; j++)
             {
-                greatdiff = diff;
-                greatdiffbegin = matrix[i][0];
-                greatdiffend = matrix[i][1];
+                if((i>=matrix[j][0])&&(i<matrix[j][1]))
+                {
+                    visitedarray[i]++;
+                }
             }
         }
         sort(array.begin() , array.end());
-        vector<int> greatelements;
-        for(auto it = (array.end() - greatdiff) ; it<(array.end()) ; it++)
+        vector<int> ansarray (N,0);
+        for(int j=0 ; j<N ; j++)
         {
-            greatelements.push_back(*it);
-        }
-        for(int i=0 ; i<greatdiff ; i++)
-        {
+            int checker = -1;
+            int checkerindex;
+            for(int i=0 ; i<N ; i++)
+            {
+                if(visitedarray[i]>checker)
+                {
+                    checkerindex = i;
+                }
+            }
+            *(ansarray.begin()+checkerindex) = *(array.rbegin());
             array.pop_back();
+            visitedarray[checkerindex] = -1;
         }
-        array.insert((array.begin()+greatdiffbegin) , greatelements.begin() , greatelements.end());
         int X = 0;
         for(int i=0 ; i<Q ; i++)
         {
-            for(auto it = (array.begin()+matrix[i][0]) ; it<(array.begin()+matrix[i][1]) ; it++)
+            for(auto it = (ansarray.begin()+matrix[i][0]) ; it<(ansarray.begin()+matrix[i][1]) ; it++)
             {
                 X = X + (*it);
             }
         }
         cout<<X<<"\n";
-        for(auto it = array.begin() ; it<array.end() ; it++)
+        for(auto it = ansarray.begin() ; it<ansarray.end() ; it++)
         {
             cout<<(*it)<<" ";
         }
         cout<<"\n";
     }
-    return 0;
-}
-//COMPILED BUT NEEDS CORRECTION
+}    
+//WORKS BUT TIME LIMIT EXCEDED.
